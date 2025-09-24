@@ -1,4 +1,6 @@
 import requests
+import os
+from dotenv import load_dotenv
 from pathlib import Path
 from urllib.parse import urlsplit
 from os.path import splitext
@@ -50,3 +52,14 @@ def fetch_nasa_images(token):
     for index, image_link in enumerate(images_links, start=1):
         image_name = f'nasa{index}'
         download_nasa_image(image_link, image_name)
+
+
+def main():
+    load_dotenv()
+    nasa_token = os.getenv('NASA_API_KEY')
+
+    fetch_nasa_images(nasa_token)
+
+
+if __name__=='__main__':
+    main()

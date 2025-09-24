@@ -1,9 +1,11 @@
 import requests
 import datetime
+import os
+from dotenv import load_dotenv
 from pathlib import Path
 
 
-def get_epic_images_link(token):
+def get_epic_images_links(token):
     """Получение ссылок на фото."""
     url = 'https://epic.gsfc.nasa.gov/api/natural/images'
     payload = {'api_key': token}
@@ -36,5 +38,16 @@ def download_epic_images(token, images_info):
 
 def fetch_epic_images(token):
     """Получение ссылок и скачивание фото."""
-    images_info = get_epic_images_link(token)
+    images_info = get_epic_images_links(token)
     download_epic_images(token, images_info)
+
+
+def main():
+    load_dotenv()
+    nasa_token = os.getenv('NASA_API_KEY')
+
+    fetch_epic_images(nasa_token)
+
+
+if __name__=='__main__':
+    main()
