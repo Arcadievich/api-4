@@ -2,6 +2,30 @@
 
 Проект содержит 5 скриптов, предназначенных для автоматизации скачивания фотографий и публикации их в телеграм-канале телеграм-ботом.
 
+## Примеры успешного запуска каждого скрипта
+
+### fetch_spacex_images.py
+
+![api-4-spacex-example](https://github.com/user-attachments/assets/e462da5d-6faa-4ed4-8cff-3844d567b9bc)
+
+Также этот скрипт умеет скачивать фотографии конкретного запуска. Для этого в консоли, рядом с командой запуска нужно указать ID конкретного запуска космического аппарата.
+
+### fetch_nasa_images.py
+
+![api-4-nasa-example](https://github.com/user-attachments/assets/118ee63c-ae71-49bd-89cc-3dd8122b45aa)
+
+### fetch_epic_images.py
+
+![api-4-epic-example](https://github.com/user-attachments/assets/ae0a2edd-71df-4691-aadf-447d56a4d1a3)
+
+### main.py
+
+Выполняет 3 предыдущих скрипта сразу.
+
+### tg_bot.py
+
+![api-4-tg-bot-example](https://github.com/user-attachments/assets/a9c95a81-b638-4cd3-b0cc-e36dd3c72b50)
+
 ## Как установить
 
 - Скачайте данный репозиторий на свой компьютер
