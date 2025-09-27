@@ -16,20 +16,17 @@ def get_epic_images_links(token):
 
 def download_epic_images(token, images_info):
     """Скачивание фото из ссылок."""
-    for index, dict in enumerate(images_info, start=1):
-        image_name = dict['image']
-        aDateTime = datetime.datetime.fromisoformat(dict['date'])
-        formatted_date = aDateTime.strftime('%Y/%m/%d')
+    for index, image_info in enumerate(images_info, start=1):
+        image_name = image_info['image']
+        date_time = datetime.datetime.fromisoformat(image_info['date'])
+        formatted_date = date_time.strftime('%Y/%m/%d')
 
         url = f'https://epic.gsfc.nasa.gov/archive/natural/{formatted_date}/png/{image_name}.png'
         payload = {'api_key': token}
         response = requests.get(url, params=payload)
         response.raise_for_status()
 
-        try:
-            Path('images').mkdir()
-        except FileExistsError:
-            pass
+        Path('images').mkdir(exist_ok=True)
 
         filename = rf'images\epic{index}.png'
         with open (filename, 'wb') as file:
@@ -44,7 +41,7 @@ def fetch_epic_images(token):
 
 def main():
     load_dotenv()
-    nasa_token = os.getenv('NASA_API_KEY')
+    nasa_token = os.environ['NASA_API_KEY']
 
     fetch_epic_images(nasa_token)
 

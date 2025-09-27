@@ -7,7 +7,7 @@ from fetch_nasa_images import fetch_nasa_images
 
 def main():
     load_dotenv()
-    nasa_token = os.getenv('NASA_API_KEY')
+    nasa_token = os.environ['NASA_API_KEY']
     download_random_launch_images()
     fetch_nasa_images(nasa_token)
     fetch_epic_images(nasa_token)

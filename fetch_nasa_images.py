@@ -8,19 +8,13 @@ from os.path import splitext
 
 def download_nasa_image(url, image_name):
     """Скачивание фото из полученных ссылок."""
-    try:
-        Path('images').mkdir()
-    except FileExistsError:
-        pass
+    Path('images').mkdir(exist_ok=True)
     parsed_url = urlsplit(url)
     extension = (splitext(parsed_url.path))[1]
 
     filename = rf'images\{image_name}{extension}'
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-    except:
-        print('Возникла ошибка при скачивании')
+    response = requests.get(url)
+    response.raise_for_status()
 
     with open (filename, 'wb') as file:
         file.write(response.content)
@@ -56,7 +50,7 @@ def fetch_nasa_images(token):
 
 def main():
     load_dotenv()
-    nasa_token = os.getenv('NASA_API_KEY')
+    nasa_token = os.environ['NASA_API_KEY']
 
     fetch_nasa_images(nasa_token)
 

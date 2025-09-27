@@ -4,31 +4,32 @@ from pathlib import Path
 from random import choice
 
 
+def make_request(url):
+    """Сделать запрос."""
+    response = requests.get(url)
+    response.raise_for_status()
+    return response.json()
+
+
 def get_latest_spacex_launch_images_links():
     """Получение ссылок на фото с последнего запуска."""
     url = 'https://api.spacexdata.com/v5/launches/latest'
-    response = requests.get(url)
-    response.raise_for_status()
-    latest_launch_info = response.json()
+    latest_launch_info = make_request(url)
     return latest_launch_info['links']['flickr']['original']
 
 
 def get_random_launch_spacex_images_links():
     """Получение ссылок на фото случайного запуска."""
-    response = requests.get('https://api.spacexdata.com/v5/launches')
-    response.raise_for_status()
-    response = response.json()
+    response = make_request('https://api.spacexdata.com/v5/launches')
 
     launches = []
-    for dict in response:
-        launch_id = dict['id']
+    for item in response:
+        launch_id = item['id']
         launches.append(launch_id)
     
-    while True:
+    for launch in range(200):
         random_url = f'https://api.spacexdata.com/v5/launches/{choice(launches)}'
-        response = requests.get(random_url)
-        response.raise_for_status()
-        response = response.json()
+        response = make_request(random_url)
         if response['links']['flickr']['original']:
             break
 
@@ -38,18 +39,13 @@ def get_random_launch_spacex_images_links():
 def get_spacex_images_links(launch_id):
     """Получение ссылок на фото указанного запуска."""
     url = f'https://api.spacexdata.com/v5/launches/{launch_id}'
-    response = requests.get(url)
-    response.raise_for_status()
-    launch_info = response.json()
+    launch_info = make_request(url)
     return launch_info['links']['flickr']['original']
         
 
 def download_image(image_url, image_name):
     """Скачать фото из ссылок."""
-    try:
-        Path('images').mkdir()
-    except FileExistsError:
-        pass
+    Path('images').mkdir(exist_ok=True)
 
     filename = rf'images\{image_name}'
     response = requests.get(image_url)
