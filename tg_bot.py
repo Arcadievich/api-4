@@ -1,28 +1,10 @@
 import telegram
 import os
-import argparse
 import time
+from pathlib import Path
 from random import shuffle
 from dotenv import load_dotenv
-
-
-def setup_delay():
-    """Установка задержки через аргумент."""
-    parser = argparse.ArgumentParser(
-        description='Задержка публикации фотографий'
-    )
-
-    parser.add_argument(
-        'delay',
-        type=int,
-        nargs='?',
-        default=14400,
-        help='ID запуска космического аппарата'
-        )
-    
-    args = parser.parse_args()
-    delay = args.delay
-    return delay
+from download_tools import create_parser
 
 
 def creating_list_of_files(directory):
@@ -33,38 +15,44 @@ def creating_list_of_files(directory):
     return items
 
 
-def sending_multiple_images(images, bot, chat_id, delay):
+def sending_multiple_images(images, bot, chat_id, delay, path):
     """Отправка фото из списка с задержкой."""
     for image in images:
-        bot.send_document(
-            chat_id=chat_id,
-            document=open(f'images/{image}', 'rb'),
-        )
+        with open (Path(path) / image, 'rb') as document:
+            bot.send_document(
+                chat_id=chat_id,
+                document=document,
+            )
         time.sleep(delay)
 
 
-def endless_sending_images(bot, chat_id):
+def endless_sending_images(bot, chat_id, delay, path):
     """Бесконечное отправление фотографий."""
-    delay = setup_delay()
 
-    images = creating_list_of_files('images')
+    images = creating_list_of_files(path)
 
     while True:
-        sending_multiple_images(images, bot, chat_id, delay)
-
-        shuffle(images)
-
-        sending_multiple_images(images, bot, chat_id, delay)
+        try:
+            sending_multiple_images(images, bot, chat_id, delay, path)
+            shuffle(images)
+            sending_multiple_images(images, bot, chat_id, delay, path)
+        except telegram.error.NetworkError:
+            time.sleep(60)
         
 
 
 def main():
+    parser = create_parser()
+    args = parser.parse_args()
+    path = args.path
+    delay = args.delay
+
     load_dotenv()
     bot_token = os.environ['TG_BOT_TOKEN']
     tg_channel_id = os.environ['TG_CHANNEL_ID']
 
     bot = telegram.Bot(token=bot_token)
-    endless_sending_images(bot=bot, chat_id=tg_channel_id)
+    endless_sending_images(bot, tg_channel_id, delay, path)
 
 
 if __name__ == '__main__':
