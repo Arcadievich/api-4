@@ -7,7 +7,9 @@
 ### fetch_spacex_images.py
 
 - Обычная команда запуска: `python fetch_spacex_images.py`
-- С указанием ID нужного запуска космического аппарата: `python fetch_spacex_images.py 5eb87d46ffd86e000604b388`
+- Опциональные аргументы:
+    * `--launch_id` или `-id`: ID запуска космического аппарата
+    * `--path` или `-p`: Название папки для сохранения фотографий
 
 ![api-4-spacex-example](https://github.com/user-attachments/assets/e462da5d-6faa-4ed4-8cff-3844d567b9bc)
 
@@ -16,12 +18,17 @@
 ### fetch_nasa_images.py
 
 - Команда запуска: `python fetch_nasa_images.py`
+- Опциональные аргументы:
+    * `--count` или `-c`: Количество фотографий для скачивания
+    * `--path` или `-p`: Название папки для сохранения фотографий
 
 ![api-4-nasa-example](https://github.com/user-attachments/assets/118ee63c-ae71-49bd-89cc-3dd8122b45aa)
 
 ### fetch_epic_images.py
 
 - Команда запуска: `python fetch_epic_images.py`
+- Опциональные аргументы:
+    * `--path` или `-p`: Название папки для сохранения фотографий
 
 ![api-4-epic-example](https://github.com/user-attachments/assets/ae0a2edd-71df-4691-aadf-447d56a4d1a3)
 
@@ -34,7 +41,9 @@
 ### tg_bot.py
 
 - Обычный запуск: `python tg_bot.py`
-- С указанием задержки 5 сек между сообщениями: `python tg_bot.py 5`
+- Опциональные аргументы:
+    * `--delay` или `-d`: Задержка между сообщениями
+    *  `--path` или `-p`: Название папки для сохранения фотографий
 
 ![api-4-tg-bot-example](https://github.com/user-attachments/assets/a9c95a81-b638-4cd3-b0cc-e36dd3c72b50)
 
