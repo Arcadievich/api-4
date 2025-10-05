@@ -20,9 +20,9 @@ def get_nasa_images_links(token, count):
     response_data = response.json()
 
     images_links = []
-    for object in response_data:
-        if 'hdurl' in object:
-            images_links.append(object['hdurl'])
+    for record in response_data:
+        if 'hdurl' in record and record['media_type'] == 'image':
+            images_links.append(record['hdurl'])
 
     return images_links
 

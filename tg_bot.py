@@ -35,7 +35,6 @@ def endless_sending_images(bot, chat_id, delay, path):
         try:
             sending_multiple_images(images, bot, chat_id, delay, path)
             shuffle(images)
-            sending_multiple_images(images, bot, chat_id, delay, path)
         except telegram.error.NetworkError:
             time.sleep(60)
         

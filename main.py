@@ -18,20 +18,6 @@ def main():
     fetch_nasa_images(nasa_token, path)
     fetch_epic_images(nasa_token, path)
 
-    # all_args = [
-    #     ['--launch_id', args.launch_id],
-    #     ['--path', args.path],
-    # ]
-
-    # scripts = [
-    #     download_random_launch_images(path),
-    #     fetch_nasa_images(nasa_token, path),
-    #     fetch_epic_images(nasa_token, path),
-    # ]
-
-    # for script in scripts:
-    #     subprocess.run([sys.executable, script] + all_args)
-
 
 if __name__ == '__main__':
     main()

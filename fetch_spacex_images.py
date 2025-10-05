@@ -23,12 +23,9 @@ def get_random_launch_spacex_images_links():
     """Получение ссылок на фото случайного запуска."""
     response = make_request('https://api.spacexdata.com/v5/launches')
 
-    launches = []
-    for item in response:
-        launch_id = item['id']
-        launches.append(launch_id)
+    launches = [item['id'] for item in response]
     
-    for launch in range(200):
+    for launch in range(len(launches)):
         random_url = f'https://api.spacexdata.com/v5/launches/{choice(launches)}'
         response = make_request(random_url)
         if response['links']['flickr']['original']:
